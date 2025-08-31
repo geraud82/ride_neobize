@@ -440,10 +440,10 @@ export default function BookingPage() {
 
                 <div className="text-center p-4 bg-blue-50 rounded-xl border border-blue-200">
                   <p className="text-sm text-blue-700 font-medium mb-2">
-                    🚀 Your reservation will be sent to both email and WhatsApp automatically via our backend
+                     Confirmation goes to your email and phone.
                   </p>
                   <p className="text-xs text-blue-600">
-                    Email: contact@neobize.com • WhatsApp: (309) 799-0907
+                    Questions? Email us at contact@neobize.com or WhatsApp (309) 799-0907.
                   </p>
                 </div>
 
