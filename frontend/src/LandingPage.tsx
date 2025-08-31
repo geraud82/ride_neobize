@@ -147,7 +147,7 @@ export default function LandingPage() {
                 {/* NEOBIZE Vehicle Image */}
                 <div className="relative w-full h-full flex items-center justify-center">
                   <img 
-                    src="/car3.jpg"
+                    src="/car1.jpg"
                     alt="NEOBIZE Airport Shuttle - Professional Vehicle" 
                     className="w-full h-full object-contain object-center rounded-2xl shadow-xl transform hover:scale-105 transition-transform duration-500"
                     style={{
