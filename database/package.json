@@ -1,0 +1,14 @@
+{
+  "name": "neobize-shuttle-database",
+  "version": "1.0.0",
+  "description": "Database layer for NEOBIZE Airport Shuttle reservation system",
+  "type": "module",
+  "main": "database.js",
+  "dependencies": {
+    "pg": "^8.16.3",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.15.5"
+  }
+}
