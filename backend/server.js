@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 import dotenv from 'dotenv';
-import { initializeDatabase, db } from '../database/sequelize-database.js';
+import { initializeDatabase, db } from './sequelize-database.js';
 
 // Load environment variables
 dotenv.config();
