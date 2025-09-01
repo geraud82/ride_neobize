@@ -699,6 +699,37 @@ app.put('/api/admin/reservations/:id/status', async (req, res) => {
   }
 });
 
+// Update reservation notes endpoint (admin)
+app.put('/api/admin/reservations/:id/notes', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { notes } = req.body;
+
+    // Get reservation details before updating
+    const reservation = await db.getReservationById(id);
+    if (!reservation) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Reservation not found' 
+      });
+    }
+
+    // Update reservation notes
+    await db.updateReservationNotes(id, notes);
+
+    res.json({ 
+      success: true, 
+      message: 'Reservation notes updated successfully'
+    });
+  } catch (error) {
+    console.error('Update reservation notes error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to update reservation notes' 
+    });
+  }
+});
+
 // Delete reservation endpoint (admin)
 app.delete('/api/reservations/:id', async (req, res) => {
   try {

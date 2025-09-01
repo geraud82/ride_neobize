@@ -330,6 +330,24 @@ export const db = {
     }
   },
 
+  async updateReservationNotes(reservationId, notes) {
+    try {
+      const [updatedRowsCount] = await Reservation.update(
+        { notes: notes },
+        { where: { id: reservationId } }
+      );
+      
+      if (updatedRowsCount > 0) {
+        const reservation = await Reservation.findByPk(reservationId);
+        return reservation ? reservation.toJSON() : null;
+      }
+      return null;
+    } catch (error) {
+      console.error('Error updating reservation notes:', error);
+      throw error;
+    }
+  },
+
   async getAllUsersWithReservations() {
     try {
       const users = await User.findAll({

@@ -40,6 +40,97 @@ const phoneDisplay = "(309) 799-0907";
 const phoneDigits = "+13097990907";
 const emailTo = "contact@neobize.com";
 
+// Admin Notes Section Component
+interface AdminNotesSectionProps {
+  reservationId: string;
+  currentNotes: string;
+  onUpdateNotes: (reservationId: string, notes: string) => Promise<void>;
+}
+
+const AdminNotesSection: React.FC<AdminNotesSectionProps> = ({ 
+  reservationId, 
+  currentNotes, 
+  onUpdateNotes 
+}) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [notes, setNotes] = useState(currentNotes);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      await onUpdateNotes(reservationId, notes);
+      setIsEditing(false);
+    } catch (error) {
+      console.error('Failed to save notes:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleCancel = () => {
+    setNotes(currentNotes);
+    setIsEditing(false);
+  };
+
+  return (
+    <div className="mt-4 p-4 bg-amber-50 rounded-lg border border-amber-200">
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-amber-700 text-sm font-medium flex items-center gap-2">
+          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+          </svg>
+          Admin Notes
+        </span>
+        {!isEditing && (
+          <button
+            onClick={() => setIsEditing(true)}
+            className="text-xs px-3 py-1 bg-amber-100 text-amber-700 rounded-full hover:bg-amber-200 transition-colors"
+          >
+            {currentNotes ? 'Edit Notes' : 'Add Notes'}
+          </button>
+        )}
+      </div>
+
+      {isEditing ? (
+        <div className="space-y-3">
+          <textarea
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+            className="w-full p-3 border border-amber-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none resize-none"
+            rows={4}
+            placeholder="Add admin notes for this reservation..."
+          />
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleSave}
+              disabled={isSaving}
+              className="px-4 py-2 bg-amber-600 text-white rounded-lg text-sm font-medium hover:bg-amber-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              {isSaving ? 'Saving...' : 'Save Notes'}
+            </button>
+            <button
+              onClick={handleCancel}
+              disabled={isSaving}
+              className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg text-sm font-medium hover:bg-gray-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div>
+          {currentNotes ? (
+            <p className="text-amber-800 text-sm whitespace-pre-wrap">{currentNotes}</p>
+          ) : (
+            <p className="text-amber-600 text-sm italic">No admin notes added yet.</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function AdminDashboard() {
   const apiUrl = useContext(ApiContext);
   const [users, setUsers] = useState<UserWithReservations[]>([]);
@@ -99,6 +190,29 @@ export default function AdminDashboard() {
       }
     } catch (err) {
       setError('Network error while updating reservation status');
+    }
+  };
+
+  const updateReservationNotes = async (reservationId: string, notes: string) => {
+    try {
+      const response = await fetch(`${apiUrl}/api/admin/reservations/${reservationId}/notes`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ notes }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Refresh data
+        fetchAllData();
+      } else {
+        setError(data.message || 'Failed to update reservation notes');
+      }
+    } catch (err) {
+      setError('Network error while updating reservation notes');
     }
   };
 
@@ -538,12 +652,25 @@ export default function AdminDashboard() {
                             </div>
                           )}
 
+                          {/* Customer Notes */}
                           {reservation.notes && (
-                            <div className="mt-3 p-3 bg-white rounded-lg">
-                              <span className="text-slate-500 text-sm">Notes:</span>
+                            <div className="mt-3 p-3 bg-white rounded-lg border border-slate-200">
+                              <span className="text-slate-500 text-sm flex items-center gap-1">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                </svg>
+                                Customer Notes:
+                              </span>
                               <p className="text-slate-800 text-sm mt-1">{reservation.notes}</p>
                             </div>
                           )}
+
+                          {/* Admin Notes Section */}
+                          <AdminNotesSection 
+                            reservationId={reservation.id}
+                            currentNotes={reservation.notes || ''}
+                            onUpdateNotes={updateReservationNotes}
+                          />
                         </div>
                       ))}
                     </div>
