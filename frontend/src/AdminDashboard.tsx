@@ -52,7 +52,7 @@ export default function AdminDashboard() {
   // Simple admin authentication (in production, use proper authentication)
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    if (adminPassword === "Passerneobize1982") { // Simple password for demo
+    if (adminPassword === "Passerneobize1982@") { // Simple password for demo
       setIsAuthenticated(true);
       fetchAllData();
     } else {
