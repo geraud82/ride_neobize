@@ -47,8 +47,8 @@ const allowedOrigins = [
   'http://localhost:3001',
   'http://localhost:3002',
   'https://ride.neobize.com',
-  'https://ride-neobize.vercel.app',
-  'https://www.ride.neobize.com'
+  'https://www.ride.neobize.com',
+  'https://ride-neobize.vercel.app'
 ];
 
 // Add production frontend URL if in production
@@ -56,20 +56,41 @@ if (process.env.NODE_ENV === 'production' && process.env.FRONTEND_URL) {
   allowedOrigins.push(process.env.FRONTEND_URL);
 }
 
+// Debug CORS origins
+console.log('🔍 CORS allowed origins:', allowedOrigins);
+
 app.use(cors({
   origin: function (origin, callback) {
+    console.log('🔍 CORS request from origin:', origin);
+    
     // Allow requests with no origin (mobile apps, curl, etc.)
-    if (!origin) return callback(null, true);
+    if (!origin) {
+      console.log('✅ CORS: Allowing request with no origin');
+      return callback(null, true);
+    }
     
     if (allowedOrigins.indexOf(origin) !== -1) {
+      console.log('✅ CORS: Origin allowed:', origin);
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.log('❌ CORS: Origin not allowed:', origin);
+      console.log('📋 CORS: Allowed origins:', allowedOrigins);
+      callback(new Error(`CORS policy violation: Origin ${origin} is not allowed`));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'HEAD'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Cache-Control',
+    'X-File-Name'
+  ],
+  exposedHeaders: ['Content-Length', 'X-Foo', 'X-Bar'],
+  maxAge: 86400 // 24 hours
 }));
 
 // Body parsing middleware
