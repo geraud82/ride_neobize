@@ -349,8 +349,9 @@ export const db = {
           lastName: userData.lastName,
           email: userData.email,
           phone: userData.phone,
-          createdAt: userData.createdAt,
-          updatedAt: userData.updatedAt,
+          // Map the actual database fields to the expected properties
+          createdAt: userData.created_at || userData.createdAt,
+          updatedAt: userData.updated_at || userData.updatedAt,
           reservations: (userData.reservations || []).map(reservation => ({
             ...reservation,
             // Map database field names to frontend expected field names
@@ -358,7 +359,10 @@ export const db = {
             time: reservation.pickupTime,
             to: reservation.toCity,
             returnDate: reservation.returnDate,
-            returnTime: reservation.returnTime
+            returnTime: reservation.returnTime,
+            // Map the actual database fields to the expected properties
+            createdAt: reservation.created_at || reservation.createdAt,
+            updatedAt: reservation.updated_at || reservation.updatedAt
           }))
         };
       });
