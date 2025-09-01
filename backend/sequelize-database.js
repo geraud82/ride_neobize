@@ -294,7 +294,18 @@ export const db = {
         where: { userId: userId },
         order: [['created_at', 'DESC']]
       });
-      return reservations.map(r => r.toJSON());
+      return reservations.map(r => {
+        const reservation = r.toJSON();
+        return {
+          ...reservation,
+          // Map database field names to frontend expected field names
+          date: reservation.pickupDate,
+          time: reservation.pickupTime,
+          to: reservation.toCity,
+          returnDate: reservation.returnDate,
+          returnTime: reservation.returnTime
+        };
+      });
     } catch (error) {
       console.error('Error getting user reservations:', error);
       throw error;
@@ -340,7 +351,15 @@ export const db = {
           phone: userData.phone,
           createdAt: userData.createdAt,
           updatedAt: userData.updatedAt,
-          reservations: userData.reservations || []
+          reservations: (userData.reservations || []).map(reservation => ({
+            ...reservation,
+            // Map database field names to frontend expected field names
+            date: reservation.pickupDate,
+            time: reservation.pickupTime,
+            to: reservation.toCity,
+            returnDate: reservation.returnDate,
+            returnTime: reservation.returnTime
+          }))
         };
       });
     } catch (error) {
