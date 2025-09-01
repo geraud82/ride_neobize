@@ -5,7 +5,7 @@ import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import twilio from 'twilio';
 import dotenv from 'dotenv';
-import { initializeDatabase, db } from '../database/database.js';
+import { initializeDatabase, db } from '../database/sequelize-database.js';
 
 // Load environment variables
 dotenv.config();
@@ -427,11 +427,11 @@ app.post('/api/users/login', async (req, res) => {
       success: true, 
       user: {
         id: user.id,
-        firstName: user.first_name,
-        lastName: user.last_name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         phone: user.phone,
-        createdAt: user.created_at
+        createdAt: user.createdAt
       }
     });
   } catch (error) {
@@ -477,8 +477,8 @@ app.post('/api/reservations', validateReservation, async (req, res) => {
       user: {
         id: user.id,
         email: user.email,
-        firstName: user.first_name,
-        lastName: user.last_name
+        firstName: user.firstName,
+        lastName: user.lastName
       },
       notifications: {
         adminEmail: emailResult.success,
@@ -569,17 +569,17 @@ app.put('/api/reservations/:id/status', async (req, res) => {
     // Send status update notification to user
     const statusUpdateResult = await sendStatusUpdateNotification(
       {
-        firstName: reservation.first_name,
-        lastName: reservation.last_name,
-        email: reservation.email
+        firstName: reservation.user.firstName,
+        lastName: reservation.user.lastName,
+        email: reservation.user.email
       },
       {
-        fromCity: reservation.from_city,
-        to: reservation.to_city,
-        pickupAddress: reservation.pickup_address,
-        dropoffAddress: reservation.dropoff_address,
-        date: reservation.pickup_date,
-        time: reservation.pickup_time
+        fromCity: reservation.fromCity,
+        to: reservation.toCity,
+        pickupAddress: reservation.pickupAddress,
+        dropoffAddress: reservation.dropoffAddress,
+        date: reservation.pickupDate,
+        time: reservation.pickupTime
       },
       status
     );
