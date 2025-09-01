@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
+import { ApiContext } from "./App";
 
 interface User {
   id: string;
@@ -38,6 +39,7 @@ const phoneDigits = "+13097990907";
 const emailTo = "contact@neobize.com";
 
 export default function AdminDashboard() {
+  const apiUrl = useContext(ApiContext);
   const [users, setUsers] = useState<UserWithReservations[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
@@ -60,7 +62,7 @@ export default function AdminDashboard() {
 
   const fetchAllData = async () => {
     try {
-      const response = await fetch('http://localhost:3008/api/admin/users-with-reservations');
+      const response = await fetch(`${apiUrl}/api/admin/users-with-reservations`);
       const data = await response.json();
       
       if (data.success) {
@@ -77,7 +79,7 @@ export default function AdminDashboard() {
 
   const updateReservationStatus = async (reservationId: string, newStatus: string) => {
     try {
-      const response = await fetch(`http://localhost:3008/api/admin/reservations/${reservationId}/status`, {
+      const response = await fetch(`${apiUrl}/api/admin/reservations/${reservationId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

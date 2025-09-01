@@ -623,6 +623,82 @@ app.put('/api/reservations/:id/status', async (req, res) => {
   }
 });
 
+// Get all users with reservations endpoint (admin)
+app.get('/api/admin/users-with-reservations', async (req, res) => {
+  try {
+    const users = await db.getAllUsersWithReservations();
+    res.json({ 
+      success: true, 
+      users 
+    });
+  } catch (error) {
+    console.error('Get users with reservations error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch users with reservations' 
+    });
+  }
+});
+
+// Update reservation status endpoint (admin) - alternative route
+app.put('/api/admin/reservations/:id/status', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    if (!status) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Status is required' 
+      });
+    }
+
+    // Get reservation details before updating
+    const reservation = await db.getReservationById(id);
+    if (!reservation) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Reservation not found' 
+      });
+    }
+
+    // Update reservation status
+    await db.updateReservationStatus(id, status);
+
+    // Send status update notification to user
+    const statusUpdateResult = await sendStatusUpdateNotification(
+      {
+        firstName: reservation.user.firstName,
+        lastName: reservation.user.lastName,
+        email: reservation.user.email
+      },
+      {
+        fromCity: reservation.fromCity,
+        to: reservation.toCity,
+        pickupAddress: reservation.pickupAddress,
+        dropoffAddress: reservation.dropoffAddress,
+        date: reservation.pickupDate,
+        time: reservation.pickupTime
+      },
+      status
+    );
+
+    console.log('Status update notification result:', statusUpdateResult);
+
+    res.json({ 
+      success: true, 
+      message: 'Reservation status updated successfully',
+      notification: statusUpdateResult.success
+    });
+  } catch (error) {
+    console.error('Update reservation status error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to update reservation status' 
+    });
+  }
+});
+
 // Delete reservation endpoint (admin)
 app.delete('/api/reservations/:id', async (req, res) => {
   try {
