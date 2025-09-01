@@ -46,7 +46,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:3002',
-  'http://ride.neobize.com',
+  'https://ride.neobize.com',
   'https://ride-neobize.vercel.app',
   'https://www.ride.neobize.com'
 ];
