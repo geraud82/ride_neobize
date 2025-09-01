@@ -2,7 +2,7 @@
   "name": "neobize-shuttle-backend",
   "version": "1.0.0",
   "description": "Backend API for NEOBIZE Airport Shuttle reservation system",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
     "start": "node server.js",
