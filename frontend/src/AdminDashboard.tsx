@@ -16,6 +16,8 @@ interface Reservation {
   userId: string;
   fromCity: string;
   to: string;
+  pickupAddress?: string;
+  dropoffAddress?: string;
   direction: 'oneway' | 'roundtrip';
   date: string;
   time: string;
@@ -432,26 +434,100 @@ export default function AdminDashboard() {
                             </div>
                           </div>
 
-                          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
                             <div>
-                              <span className="text-slate-500">Trip:</span>
+                              <span className="text-slate-500">Trip Type:</span>
                               <p className="font-medium text-slate-800">
                                 {reservation.direction === 'roundtrip' ? 'Round-trip' : 'One-way'}
                               </p>
                             </div>
                             <div>
                               <span className="text-slate-500">Passengers:</span>
-                              <p className="font-medium text-slate-800">{reservation.passengers}</p>
+                              <p className="font-medium text-slate-800">{reservation.passengers} person{reservation.passengers !== 1 ? 's' : ''}</p>
                             </div>
                             <div>
                               <span className="text-slate-500">Luggage:</span>
-                              <p className="font-medium text-slate-800">{reservation.luggage} bags</p>
+                              <p className="font-medium text-slate-800">{reservation.luggage} bag{reservation.luggage !== 1 ? 's' : ''}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500">Reservation ID:</span>
+                              <p className="font-medium text-slate-800 font-mono text-xs">{reservation.id.substring(0, 8)}...</p>
                             </div>
                             <div>
                               <span className="text-slate-500">Booked:</span>
                               <p className="font-medium text-slate-800">{formatDate(reservation.createdAt)}</p>
                             </div>
+                            <div>
+                              <span className="text-slate-500">Last Updated:</span>
+                              <p className="font-medium text-slate-800">{formatDate(reservation.updatedAt)}</p>
+                            </div>
                           </div>
+
+                          {/* Pickup and Drop-off Addresses */}
+                          {(reservation.pickupAddress || reservation.dropoffAddress) && (
+                            <div className="mt-4 p-3 bg-white rounded-lg border border-slate-200">
+                              <h5 className="font-medium text-slate-700 mb-2">Addresses</h5>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                {reservation.pickupAddress && (
+                                  <div>
+                                    <span className="text-slate-500 flex items-center gap-1">
+                                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                      </svg>
+                                      Pickup Address:
+                                    </span>
+                                    <p className="font-medium text-slate-800 mt-1">{reservation.pickupAddress}</p>
+                                  </div>
+                                )}
+                                {reservation.dropoffAddress && (
+                                  <div>
+                                    <span className="text-slate-500 flex items-center gap-1">
+                                      <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                                      </svg>
+                                      Drop-off Address:
+                                    </span>
+                                    <p className="font-medium text-slate-800 mt-1">{reservation.dropoffAddress}</p>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Return Trip Details for Round-trip */}
+                          {reservation.direction === 'roundtrip' && reservation.returnDate && reservation.returnTime && (
+                            <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
+                              <h5 className="font-medium text-blue-800 mb-2 flex items-center gap-2">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                </svg>
+                                Return Trip Details
+                              </h5>
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                                <div>
+                                  <span className="text-blue-600">Return Date:</span>
+                                  <p className="font-medium text-blue-800">{formatDate(reservation.returnDate)}</p>
+                                </div>
+                                <div>
+                                  <span className="text-blue-600">Return Time:</span>
+                                  <p className="font-medium text-blue-800">{formatTime(reservation.returnTime)}</p>
+                                </div>
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Promo Code */}
+                          {reservation.promo && (
+                            <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                              <span className="text-green-600 text-sm flex items-center gap-1">
+                                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M12.79 21L3 11.21v2c0 .45.54.67.85.35l.79-.79 1.41 1.41-.79.79c-.31.31-.09.85.35.85h2L21 2.62l-.62-.62L9 13.38 12.79 21z"/>
+                                </svg>
+                                Promo Code Applied:
+                              </span>
+                              <p className="font-medium text-green-800 mt-1 font-mono">{reservation.promo}</p>
+                            </div>
+                          )}
 
                           {reservation.notes && (
                             <div className="mt-3 p-3 bg-white rounded-lg">

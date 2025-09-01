@@ -1,0 +1,21 @@
+[33m0c2b519[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m database cnnection fix
+[33m6e9d563[m details reervation add
+[33m4e34a79[m ameliorartion
+[33mb12754e[m Fix date and time display issue - Map database field names correctly
+[33m9097fa6[m admin fixe
+[33m0ae9753[m Simplify Vercel config with modern rewrites approach for SPA routing
+[33m0a9ad42[m Add explicit admin route handling to Vercel config
+[33m785c6e2[m Improve Vercel config for better SPA routing with static assets handling
+[33m0c2154f[m Fix admin route 404 error - Update Vercel config for SPA routing and fix API URLs
+[33m90b9d4a[m Fix CORS issues: Update backend origins and environment variables
+[33m31e4e2c[m https addto ride.neobize
+[33ma960640[m add api to vercel
+[33m8b4395c[m popo
+[33m071c7b5[m index fixe
+[33m051b538[m yaml fixe
+[33md9f2cf1[m fixe render
+[33m598511e[m Fix Render deployment: Move render.yaml to root directory with proper backend rootDir configuration
+[33meba7506[m polo
+[33m9373a26[m mobile
+[33ma86ecd8[m car1
+[33m54e7cbd[m first commit
