@@ -19,6 +19,7 @@ const destinations = [
 export default function BookingPage() {
   const navigate = useNavigate();
   const apiUrl = useContext(ApiContext);
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
@@ -83,11 +84,9 @@ export default function BookingPage() {
     setSubmitStatus({ type: null, message: '' });
 
     try {
-      const response = await fetch(`${apiUrl}/api/reservations`, {
+      const response = await fetch(`${API_BASE}/api/reservations`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form),
       });
 

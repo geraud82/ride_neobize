@@ -46,7 +46,9 @@ const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
   'http://localhost:3002',
-  'http://localhost:5173'
+  'http://ride.neobize.com',
+  'https://ride-neobize.vercel.app',
+  'https://www.ride.neobize.com'
 ];
 
 // Add production frontend URL if in production
