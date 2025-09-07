@@ -23,14 +23,16 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- moving page -->
+  
+  <!-- Moving page -->
   <url>
     <loc>https://ride.neobize.com/moving</loc>
     <lastmod>2025-01-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <!-- moline too'hare page  -->
+  
+  <!-- Moline to O'Hare page -->
   <url>
     <loc>https://ride.neobize.com/moline-to-chicago-ohare-airport</loc>
     <lastmod>2025-01-06</lastmod>
@@ -53,4 +55,19 @@
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
+</urlset>
+    <!-- Admin Dashboard -->
+    <url>
+        <loc>https://ride.neobize.com/admin</loc>
+        <lastmod>2025-01-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    
+    <!-- FAQ Page -->
+    <url>
+        <loc>https://ride.neobize.com/faq</loc>
+        <lastmod>2025-01-06</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
