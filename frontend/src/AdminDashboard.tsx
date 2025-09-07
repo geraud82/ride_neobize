@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { ApiContext } from "./App";
 
@@ -36,9 +36,6 @@ interface UserWithReservations extends User {
   reservations: Reservation[];
 }
 
-const phoneDisplay = "(309) 799-0907";
-const phoneDigits = "+13097990907";
-const emailTo = "contact@neobize.com";
 
 // Admin Notes Section Component
 interface AdminNotesSectionProps {
@@ -136,7 +133,6 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState<UserWithReservations[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
-  const [selectedUser, setSelectedUser] = useState<UserWithReservations | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [isAuthenticated, setIsAuthenticated] = useState(false);

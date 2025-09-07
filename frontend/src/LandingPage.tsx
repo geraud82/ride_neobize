@@ -28,10 +28,6 @@ export default function LandingPage() {
           
           {/* Mobile Navigation */}
           <div className="flex items-center gap-1 md:hidden">
-            {/* Visit Website - Mobile */}
-            <a href="https://www.neobize.com" target="_blank" className="px-1.5 py-1 rounded bg-gradient-to-r from-blue-600 to-blue-700 text-white text-xs font-medium shadow hover:shadow-md hover:from-blue-700 hover:to-blue-800 transition-all">
-              our services
-            </a>
             {/* My Account - Mobile */}
             <Link to="/dashboard" className="inline-flex items-center gap-0.5 px-1.5 py-1 text-slate-600 hover:text-blue-700 transition-colors">
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
@@ -68,9 +64,6 @@ export default function LandingPage() {
               </svg>
               My Account
             </Link>
-            <a href="https://www.neobize.com" target="_blank" className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105">
-              Visit Website
-            </a>
           </div>
         </div>
       </header>
@@ -279,9 +272,10 @@ export default function LandingPage() {
           <div>
             <div className="font-semibold">Quick Links</div>
             <ul className="mt-2 space-y-1">
-              <li>Airport Shuttle — Quad Cities ↔ O'Hare</li>
-              <li>Private Group Rides (up to 7 passengers)</li>
-              <li>Student & Family Discounts</li>
+              <li><Link className="hover:text-blue-700" to="/moline-to-chicago-ohare-airport">Moline to O'Hare Shuttle</Link></li>
+              <li><Link className="hover:text-blue-700" to="/faq">FAQ</Link></li>
+              <li><Link className="hover:text-blue-700" to="/book">Book Now</Link></li>
+              <li><Link className="hover:text-blue-700" to="/dashboard">My Account</Link></li>
             </ul>
           </div>
         </div>
