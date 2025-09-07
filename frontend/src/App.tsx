@@ -6,6 +6,7 @@ import UserDashboard from "./UserDashboard";
 import AdminDashboard from "./AdminDashboard";
 import MolineToOhareShuttle from "./MolineToOhareShuttle";
 import FAQ from "./FAQ";
+import MovingPage from "./MovingPage";
 
 // Get API URL from environment variables
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3008';
@@ -24,6 +25,7 @@ export default function App() {
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/moline-to-chicago-ohare-airport" element={<MolineToOhareShuttle />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/moving" element={<MovingPage />} />
         </Routes>
       </Router>
     </ApiContext.Provider>

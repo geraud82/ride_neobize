@@ -35,34 +35,40 @@ export default function LandingPage() {
               </svg>
               <span className="text-xs font-medium">Account</span>
             </Link>
-            {/* Call Button - Mobile */}
-            <a href={`tel:${phoneDigits}`} className="inline-flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded-lg text-xs font-medium shadow hover:bg-blue-700 transition-colors">
+            <Link to="/book" className="inline-flex items-center gap-1 px-2 py-1 bg-blue-600 text-white rounded-lg text-xs font-medium shadow hover:bg-blue-700 transition-colors">
               <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                <path d="M18.92 6.01C18.72 5.42 18.16 5 17.5 5h-11c-.66 0-1.22.42-1.42 1.01L3 12v8c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-1h12v1c0 .55.45 1 1 1h1c.55 0 1-.45 1-1v-8l-2.08-5.99zM6.5 16c-.83 0-1.5-.67-1.5-1.5S5.67 13 6.5 13s1.5.67 1.5 1.5S7.33 16 6.5 16zm11 0c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM5 11l1.5-4.5h11L19 11H5z"/>
               </svg>
-              Call
-            </a>
+              Ride
+            </Link>
+            <Link to="/moving" className="inline-flex items-center gap-1 px-2 py-1 bg-green-600 text-white rounded-lg text-xs font-medium shadow hover:bg-green-700 transition-colors">
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 3L2 12h3v8h14v-8h3L12 3zm0 2.5L18.5 12H17v6H7v-6H5.5L12 5.5z"/>
+              </svg>
+              Moving
+            </Link>
           </div>
           
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6 text-sm">
+            <Link to="/faq" className="text-slate-600 hover:text-blue-700 transition-colors">FAQ</Link>
             <a href={`tel:${phoneDigits}`} className="flex items-center gap-2 font-semibold text-slate-700 hover:text-blue-700 transition-colors">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
               </svg>
               {phoneDisplay}
             </a>
-            <a href={`mailto:${emailTo}`} className="flex items-center gap-2 text-slate-600 hover:text-blue-700 transition-colors">
-              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-              </svg>
-              {emailTo}
-            </a>
             <Link to="/dashboard" className="flex items-center gap-2 text-slate-600 hover:text-blue-700 transition-colors">
               <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
               </svg>
               My Account
+            </Link>
+            <Link to="/book" className="px-4 py-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white shadow-md hover:shadow-lg hover:from-blue-700 hover:to-blue-800 transition-all transform hover:scale-105">
+              Book Ride
+            </Link>
+            <Link to="/moving" className="px-4 py-2 rounded-full bg-gradient-to-r from-green-600 to-green-700 text-white shadow-md hover:shadow-lg hover:from-green-700 hover:to-green-800 transition-all transform hover:scale-105">
+              Book Moving
             </Link>
           </div>
         </div>
@@ -274,8 +280,8 @@ export default function LandingPage() {
             <ul className="mt-2 space-y-1">
               <li><Link className="hover:text-blue-700" to="/moline-to-chicago-ohare-airport">Moline to O'Hare Shuttle</Link></li>
               <li><Link className="hover:text-blue-700" to="/faq">FAQ</Link></li>
-              <li><Link className="hover:text-blue-700" to="/book">Book Now</Link></li>
-              <li><Link className="hover:text-blue-700" to="/dashboard">My Account</Link></li>
+              <li><Link className="hover:text-blue-700" to="/book">Book Ride</Link></li>
+              <li><Link className="hover:text-blue-700" to="/moving">Moving Services</Link></li>
             </ul>
           </div>
         </div>

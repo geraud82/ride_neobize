@@ -23,7 +23,21 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  
+  <!-- moving page -->
+  <url>
+    <loc>https://ride.neobize.com/moving</loc>
+    <lastmod>2025-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <!-- moline too'hare page  -->
+  <url>
+    <loc>https://ride.neobize.com/moline-to-chicago-ohare-airport</loc>
+    <lastmod>2025-01-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
   <!-- Login Page -->
   <url>
     <loc>https://ride.neobize.com/login</loc>
